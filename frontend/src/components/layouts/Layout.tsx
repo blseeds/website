@@ -3,6 +3,7 @@ import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import { useEffect } from "react";
 import { Box } from "@mui/material";
+import { Analytics } from "@vercel/analytics/next"
 
 export default function Layout() {
   const location = useLocation();
@@ -30,6 +31,7 @@ export default function Layout() {
         <Outlet />
       </Box>
       <Footer />
+      <Analytics/>
     </Box>
   );
 }
