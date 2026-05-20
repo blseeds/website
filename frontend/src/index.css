@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* Default / Landing Page Tokens */
+    --primary-green: #0b5d1e;
+    --secondary-green: #3d9b41;
+    --accent-gold: #e6b325;
+    --bg-color: #f8f9f5;
+    --surface-color: #ffffff;
+    --text-primary: #1f2933;
+    --text-secondary: #667085;
+    --heading-font: "Poppins", sans-serif;
+    --body-font: "Inter", sans-serif;
+  }
+
+  [data-page="about"] {
+    --primary-green: #245c36;
+    --secondary-green: #7ea172;
+    --accent-gold: #dcc7aa;
+    --bg-color: #faf8f2;
+    --text-primary: #232323;
+    --text-secondary: #8c8c8c;
+    --heading-font: "DM Serif Display", serif;
+    --body-font: "Source Sans Pro", sans-serif;
+  }
+
+  [data-page="products"] {
+    --primary-green: #166534;
+    --secondary-green: #65a30d;
+    --accent-gold: #facc15;
+    --bg-color: #f4f5f7;
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --heading-font: "Montserrat", sans-serif;
+    --body-font: "Open Sans", sans-serif;
+  }
+
+  [data-page="gallery"] {
+    --primary-green: #1b4332;
+    --secondary-green: #588157;
+    --accent-gold: #dda15e;
+    --bg-color: #fbfaf6;
+    --text-primary: #283618;
+    --text-secondary: #606c38;
+    --heading-font: "Playfair Display", serif;
+    --body-font: "Lato", sans-serif;
+  }
+
+  [data-page="dealer-enquiry"] {
+    --primary-green: #14532d;
+    --secondary-green: #22c55e;
+    --accent-gold: #ca8a04;
+    --bg-color: #fafafa;
+    --text-primary: #27272a;
+    --text-secondary: #71717a;
+    --heading-font: "Manrope", sans-serif;
+    --body-font: "Inter", sans-serif;
+  }
+
+  [data-page="contact"] {
+    --primary-green: #14532d;
+    --secondary-green: #4ade80;
+    --accent-gold: #cbd5e1;
+    --bg-color: #f8fafc;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --heading-font: "Plus Jakarta Sans", sans-serif;
+    --body-font: "Inter", sans-serif;
+  }
+
+  [data-page="blog"] {
+    --primary-green: #166534;
+    --secondary-green: #4d7c0f;
+    --accent-gold: #d97706;
+    --bg-color: #fcfcfa;
+    --text-primary: #1f2937;
+    --text-secondary: #4b5563;
+    --heading-font: "Merriweather", serif;
+    --body-font: "Nunito Sans", sans-serif;
+  }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--body-font);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--heading-font);
+  }
+}
+
+@theme {
+  --color-brand-primary: var(--primary-green);
+  --color-brand-secondary: var(--secondary-green);
+  --color-brand-accent: var(--accent-gold);
+  --color-brand-bg: var(--bg-color);
+  --color-brand-surface: var(--surface-color);
+  --color-brand-text-primary: var(--text-primary);
+  --color-brand-text-secondary: var(--text-secondary);
+}
