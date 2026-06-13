@@ -1,7 +1,26 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { UMAMI_CONFIG, isUmamiConfigured } from '../data/umami.config';
+// import { useState, useEffect, useCallback, useRef } from 'react';
+// import { UMAMI_CONFIG, isUmamiApiAvailable } from '../data/umami.config';
 
-/* ─── Type Definitions ─── */
+/**
+ * ═══════════════════════════════════════════════════════════════
+ * useUmamiAnalytics — Real-time analytics data from Umami API
+ * ═══════════════════════════════════════════════════════════════
+ * 
+ * 🔒 REQUIRES PAID PLAN (API key access)
+ * 
+ * This hook is fully implemented and ready to use once you
+ * upgrade from the Hobby plan and obtain an API key.
+ * 
+ * To enable:
+ *   1. Upgrade your Umami Cloud plan
+ *   2. Create an API key in Settings → API Keys
+ *   3. Uncomment BASE_URL, API_KEY, POLL_INTERVAL in umami.config.ts
+ *   4. Uncomment all code below
+ *   5. Update UmamiAnalyticsBar.tsx to use this hook
+ * ═══════════════════════════════════════════════════════════════
+ */
+
+/* ─── Type Definitions (exported for future use) ─── */
 
 export interface UmamiRealtimeData {
   /** Active visitors right now */
@@ -33,9 +52,14 @@ export interface UmamiRealtimeData {
   error: string | null;
   /** When this data was last updated */
   lastUpdated: Date | null;
-  /** Whether Umami is properly configured */
-  isConfigured: boolean;
+  /** Whether Umami API is available */
+  isApiAvailable: boolean;
 }
+
+/*
+// ──────────────────────────────────────────────────────
+// UNCOMMENT EVERYTHING BELOW WHEN YOU HAVE AN API KEY
+// ──────────────────────────────────────────────────────
 
 interface UmamiRealtimeApiResponse {
   countries?: Record<string, number>;
@@ -64,7 +88,7 @@ interface UmamiActiveApiResponse {
   [key: string]: unknown;
 }
 
-/* ─── API Helpers ─── */
+// ─── API Helpers ───
 
 const headers = (): HeadersInit => ({
   'Accept': 'application/json',
@@ -85,10 +109,10 @@ async function fetchApi<T>(endpoint: string): Promise<T> {
   return response.json();
 }
 
-/* ─── The Hook ─── */
+// ─── The Hook ───
 
 export function useUmamiAnalytics(): UmamiRealtimeData {
-  const configured = isUmamiConfigured();
+  const apiAvailable = isUmamiApiAvailable();
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const [data, setData] = useState<UmamiRealtimeData>({
@@ -104,19 +128,18 @@ export function useUmamiAnalytics(): UmamiRealtimeData {
     isLoading: true,
     error: null,
     lastUpdated: null,
-    isConfigured: configured,
+    isApiAvailable: apiAvailable,
   });
 
   const fetchAllData = useCallback(async () => {
-    if (!configured) {
-      setData(prev => ({ ...prev, isLoading: false, isConfigured: false }));
+    if (!apiAvailable) {
+      setData(prev => ({ ...prev, isLoading: false, isApiAvailable: false }));
       return;
     }
 
     try {
       const websiteId = UMAMI_CONFIG.WEBSITE_ID;
 
-      // Fetch all endpoints in parallel
       const [realtimeData, statsData, activeData] = await Promise.all([
         fetchApi<UmamiRealtimeApiResponse>(
           `/websites/${websiteId}/realtime`
@@ -129,7 +152,6 @@ export function useUmamiAnalytics(): UmamiRealtimeData {
         ).catch(() => null),
       ]);
 
-      // Parse realtime data
       const topPages = realtimeData?.urls
         ? Object.entries(realtimeData.urls)
             .map(([url, count]) => ({ url, count }))
@@ -160,7 +182,6 @@ export function useUmamiAnalytics(): UmamiRealtimeData {
           createdAt: e.createdAt || '',
         }));
 
-      // Parse stats
       const pageViews = statsData?.pageviews?.value ?? 0;
       const visitors = statsData?.visitors?.value ?? 0;
       const visits = statsData?.visits?.value ?? 1;
@@ -169,7 +190,6 @@ export function useUmamiAnalytics(): UmamiRealtimeData {
       const bounceRate = visits > 0 ? Math.round((bounces / visits) * 100) : 0;
       const avgDuration = visits > 0 ? Math.round(totalTime / visits) : 0;
 
-      // Active visitors
       const activeVisitors = activeData?.x ?? 0;
 
       setData({
@@ -185,7 +205,7 @@ export function useUmamiAnalytics(): UmamiRealtimeData {
         isLoading: false,
         error: null,
         lastUpdated: new Date(),
-        isConfigured: true,
+        isApiAvailable: true,
       });
     } catch (err) {
       setData(prev => ({
@@ -195,12 +215,12 @@ export function useUmamiAnalytics(): UmamiRealtimeData {
         lastUpdated: new Date(),
       }));
     }
-  }, [configured]);
+  }, [apiAvailable]);
 
   useEffect(() => {
     fetchAllData();
 
-    if (configured && UMAMI_CONFIG.POLL_INTERVAL > 0) {
+    if (apiAvailable && UMAMI_CONFIG.POLL_INTERVAL > 0) {
       intervalRef.current = setInterval(fetchAllData, UMAMI_CONFIG.POLL_INTERVAL);
     }
 
@@ -209,7 +229,8 @@ export function useUmamiAnalytics(): UmamiRealtimeData {
         clearInterval(intervalRef.current);
       }
     };
-  }, [fetchAllData, configured]);
+  }, [fetchAllData, apiAvailable]);
 
   return data;
 }
+*/

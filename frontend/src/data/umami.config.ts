@@ -1,45 +1,50 @@
 /**
  * Umami Analytics Configuration
  * 
- * Replace the placeholder values below with your actual Umami credentials.
+ * CURRENT PLAN: Umami Cloud Hobby (Free)
+ * - ✅ Tracking script (page views, events) — works without API key
+ * - ✅ Client-side umami.track() calls — works without API key
+ * - ❌ API endpoints (stats, realtime, active visitors) — requires paid plan API key
  * 
- * For Umami Cloud:
- *   - UMAMI_BASE_URL: "https://api.umami.is/v1"
- *   - UMAMI_SCRIPT_URL: "https://cloud.umami.is/script.js"
- *   - UMAMI_WEBSITE_ID: Your website UUID from Umami Cloud dashboard
- *   - UMAMI_API_KEY: Your API key from Settings → API Keys
- * 
- * For Self-Hosted:
- *   - UMAMI_BASE_URL: "https://your-umami-domain.com/api"
- *   - UMAMI_SCRIPT_URL: "https://your-umami-domain.com/script.js"
- *   - UMAMI_WEBSITE_ID: Your website UUID
- *   - UMAMI_API_KEY: Bearer token from /api/auth/login
+ * When you upgrade to a paid plan, uncomment the API_KEY and BASE_URL
+ * fields below, and uncomment the API-fetching code in:
+ *   - src/hooks/useUmamiAnalytics.ts
+ *   - src/components/common/UmamiAnalyticsBar.tsx
  */
 
 export const UMAMI_CONFIG = {
-  /** Base URL for Umami API requests */
-  BASE_URL: import.meta.env.VITE_UMAMI_BASE_URL || 'https://api.umami.is/v1',
+  /** Website ID (UUID) from Umami dashboard */
+  WEBSITE_ID: '36518791-36f7-40b5-b2f8-c2f9067d129a',
 
   /** Umami tracking script URL */
-  SCRIPT_URL: import.meta.env.VITE_UMAMI_SCRIPT_URL || 'https://cloud.umami.is/script.js',
+  SCRIPT_URL: 'https://cloud.umami.is/script.js',
 
-  /** Website ID (UUID) from Umami dashboard */
-  WEBSITE_ID: import.meta.env.VITE_UMAMI_WEBSITE_ID || 'YOUR_WEBSITE_ID_HERE',
+  /** Umami Cloud dashboard URL for this website */
+  DASHBOARD_URL: 'https://cloud.umami.is',
 
-  /** API Key for authenticated requests */
-  API_KEY: import.meta.env.VITE_UMAMI_API_KEY || 'YOUR_API_KEY_HERE',
+  // ──────────────────────────────────────────────────
+  // 🔒 PAID PLAN ONLY — Uncomment when you upgrade
+  // ──────────────────────────────────────────────────
 
-  /** Polling interval in milliseconds for real-time data (default: 30 seconds) */
-  POLL_INTERVAL: 30_000,
+  // /** Base URL for Umami API requests */
+  // BASE_URL: import.meta.env.VITE_UMAMI_BASE_URL || 'https://api.umami.is/v1',
 
-  /** Whether to enable the analytics bar (set to false to hide) */
+  // /** API Key for authenticated requests (paid plans only) */
+  // API_KEY: import.meta.env.VITE_UMAMI_API_KEY || '',
+
+  // /** Polling interval in ms for real-time data (default: 30s) */
+  // POLL_INTERVAL: 30_000,
+
+  /** Whether to enable the analytics bar */
   ENABLED: true,
 } as const;
 
-/** Check if Umami is properly configured with real credentials */
-export function isUmamiConfigured(): boolean {
-  return (
-    UMAMI_CONFIG.WEBSITE_ID !== 'YOUR_WEBSITE_ID_HERE' &&
-    UMAMI_CONFIG.API_KEY !== 'YOUR_API_KEY_HERE'
-  );
+/** 
+ * Check if Umami API is available (requires paid plan API key).
+ * Currently always returns false on Hobby plan.
+ * Uncomment the real check when you upgrade.
+ */
+export function isUmamiApiAvailable(): boolean {
+  // return !!UMAMI_CONFIG.API_KEY && UMAMI_CONFIG.API_KEY !== '';
+  return false;
 }
