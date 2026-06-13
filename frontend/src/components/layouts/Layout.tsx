@@ -1,6 +1,7 @@
 import { Outlet, useLocation } from "react-router-dom";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
+import UmamiAnalyticsBar from "../common/UmamiAnalyticsBar";
 import { useEffect } from "react";
 import { Box } from "@mui/material";
 import { Analytics } from "@vercel/analytics/react"
@@ -31,6 +32,7 @@ export default function Layout() {
         <Outlet />
       </Box>
       <Footer />
+      <UmamiAnalyticsBar />
       <Analytics/>
     </Box>
   );
