@@ -249,21 +249,6 @@ The website is deployed at [blseeds.com](https://www.blseeds.com/).
 
 5. Set up custom domain and SSL certificate
 
-## Performance Optimization
-
-- **Vite**: Provides instant server start and lightning-fast HMR
-- **Code Splitting**: Automatic route-based code splitting with React Router
-- **Tree Shaking**: Unused code is removed in production builds
-- **Image Optimization**: Consider using responsive images and lazy loading
-- **Analytics**: Vercel Analytics helps monitor performance metrics
-
-## Accessibility
-
-- Semantic HTML structure
-- ARIA labels for interactive elements
-- Keyboard navigation support
-- Color contrast compliance
-- Responsive design for all screen sizes
 
 ## Contributing
 
@@ -276,10 +261,6 @@ We welcome contributions to improve the website! Please follow these steps:
 5. Open a Pull Request
 
 Please ensure your code follows our coding standards and passes linting checks.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Contact & Support
 
@@ -298,6 +279,8 @@ Uttar Pradesh, India
 
 ---
 
-**Last Updated**: June 2026  
-**Version**: 1.0.0  
-**Repository**: [github.com/blseeds/website](https://github.com/blseeds/website)
+Developer Information
+Name: Aviral Kumar
+Email: aviralkumar2003@gmail.com
+
+Client Feedback: Excellent developer with great skills, incorporates feedback quickly and ensures timely delivery. Glad to have him to make our website and is heavily reliable and trustworthy.
